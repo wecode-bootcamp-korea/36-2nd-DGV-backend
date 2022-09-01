@@ -12,12 +12,26 @@ CREATE TABLE movies (
     PRIMARY KEY (id)
 );
 
+CREATE TABLE location (
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(20) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE sub_location (
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(20) NOT NULL,
+    PRIMARY KEY (id)
+);
+
 CREATE TABLE theaters (
     id INT NOT NULL AUTO_INCREMENT,
-    location VARCHAR(20) NOT NULL,
-    sub_location VARCHAR(20) NOT NULL,
+    location_id INT NOT NULL,
+    sub_location_id INT NOT NULL,
     auditorium VARCHAR(20) NOT NULL,
     seats INT NOT NULL,
+    CONSTRAINT theaters_location_id_location_id_fkey FOREIGN KEY (location_id) REFERENCES location(id) ON DELETE CASCADE,
+    CONSTRAINT theaters_sub_location_id_sub_location_id_fkey FOREIGN KEY (sub_location_id) REFERENCES sub_location(id) ON DELETE CASCADE,
     PRIMARY KEY (id)
 );
 
