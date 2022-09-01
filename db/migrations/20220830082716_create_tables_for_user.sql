@@ -1,8 +1,7 @@
 -- migrate:up
 CREATE TABLE users (
     id INT NOT NULL AUTO_INCREMENT,
-    kakao_id INT NOT NULL,
-    name VARCHAR(200) NOT NULL,
+    nickname VARCHAR(200) NOT NULL,
     email VARCHAR(200) NOT NULL,
     profie_image_url VARCHAR(2083),
     PRIMARY KEY (id)
