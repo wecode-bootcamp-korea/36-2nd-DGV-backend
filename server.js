@@ -1,32 +1,19 @@
 const http = require("http");
-const express = require("express");
-const cors = require("cors");
-const morgan = require("morgan");
 require("dotenv").config();
 
-const routes = require("./routes");
+const { createApp } = require("./app");
+const { MySQLDatabase } = require("./models/database");
 
-const app = express();
+const startServer = async () => {
+  const app = createApp();
+  const server = http.createServer(app);
+  const PORT = process.env.PORT;
 
-app.use(cors());
-app.use(morgan('dev'));
-app.use(express.json());
-app.use(routes);
+	await MySQLDatabase.initialize();
 
-app.get("/ping", (req, res) => {
-    res.json({ message: "pong" });
-});
-
-const server = http.createServer(app);
-const PORT = process.env.PORT;
-
-const start = async () => {
-
-    try {
-        server.listen(PORT, () => console.log(`Server is listening on ${PORT}`));
-    } catch (err) {
-        console.log(err);
-    }
+  server.listen(PORT, () => {
+    console.log(`Listening on Port ${PORT}`);
+  });
 };
 
-start();
+startServer();
