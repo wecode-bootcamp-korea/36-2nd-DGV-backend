@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/wecode-bootcamp-korea/36-2nd-DGV-backend#readme",
   "dependencies": {
+    "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dbmate": "^1.0.3",
