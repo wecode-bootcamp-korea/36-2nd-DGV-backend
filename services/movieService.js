@@ -4,6 +4,21 @@ const getTitle = async () => {
     return await movieDao.getTitle();
 };
 
+const getListByLocationName = async (locationName) => {
+    return await movieDao.getListByLocationName(locationName);
+};
+
+const getListBySubLocationName = async (subLocationName) => {
+    return await movieDao.getListBySubLocationName(subLocationName);
+};
+
+const getListByMovieIdAndSubLocation = async (movieId, subLocationName) => {
+    return await movieDao.getListByMovieIdAndSubLocation(movieId, subLocationName);
+};
+
 module.exports = {
-    getTitle
+    getTitle,
+    getListByLocationName,
+    getListBySubLocationName,
+    getListByMovieIdAndSubLocation
 };

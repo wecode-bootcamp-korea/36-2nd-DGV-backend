@@ -15,6 +15,48 @@ const getTitle = async (req, res) => {
     }
 };
 
+const getListByLocationName = async (req, res) => {
+    try {
+        const { locationName } = req.query
+
+        const listByLocationName = await movieService.getListByLocationName(locationName);
+        
+        return res.status(200).json({
+            movieList:listByLocationName
+        });
+       
+    } catch(err) {
+        errorhandler(err, res);
+    }
+};
+
+const getListBySubLocationName = async (req, res) => {
+    try {
+        const { subLocationName } = req.query
+        
+        const listBySubLocationName = await movieService.getListBySubLocationName(subLocationName);
+        return res.status(200).json({movieList: listBySubLocationName});
+       
+    } catch(err) {
+        errorhandler(err, res);
+    }
+};
+
+const getListByMovieIdAndSubLocation = async (req, res) => {
+    try {
+        const { movieId, subLocationName } = req.query
+        
+        const listByTwoOptions = await movieService.getListByMovieIdAndSubLocation(movieId, subLocationName);
+        return res.status(200).json({movieList:listByTwoOptions});
+       
+    } catch(err) {
+        errorhandler(err, res);
+    }
+};
+
 module.exports = {
-    getTitle 
+    getTitle,
+    getListByLocationName,
+    getListBySubLocationName,
+    getListByMovieIdAndSubLocation
 };
