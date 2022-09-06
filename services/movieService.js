@@ -4,6 +4,11 @@ const getTitle = async () => {
     return await movieDao.getTitle();
 };
 
+const orderByBase = async (orderBase) => {
+    return await movieDao.orderByBase(orderBase);
+};
+
 module.exports = {
-    getTitle
+    getTitle,
+    orderByBase
 };
