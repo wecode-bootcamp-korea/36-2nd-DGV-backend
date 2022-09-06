@@ -15,6 +15,19 @@ const getTitle = async (req, res) => {
     }
 };
 
+const getDetail = async (req, res) => {
+    try {
+        const { movieId } = req.params
+        
+        const movieDetail = await movieService.getDetail(movieId);
+        return res.status(200).json(movieDetail);
+       
+    } catch(err) {
+        errorhandler(err, res);
+    }
+};
+
 module.exports = {
-    getTitle 
+    getTitle,
+    getDetail
 };
