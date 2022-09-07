@@ -6,7 +6,6 @@ const errorhandler = (err,res) => {
 
 const getTitle = async (req, res) => {
     try {
-        
         const movieTitle= await movieService.getTitle();
         return res.status(200).json(movieTitle);
        
