@@ -4,4 +4,8 @@ const userRouter = require('./userRouter');
 
 router.use("/user", userRouter.router);
 
+const movieRouter = require("./movieRouter");
+
+router.use("/movies", movieRouter.router);
+
 module.exports = router;
