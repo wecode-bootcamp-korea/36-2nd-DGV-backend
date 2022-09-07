@@ -57,7 +57,6 @@ const orderByBase = async (req, res) => {
         return res.status(201).json({
             orderList: orderList
         });
-        
     } catch(err) {
         errorhandler(err, res);
     }
