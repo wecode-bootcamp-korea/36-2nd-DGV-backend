@@ -6,7 +6,6 @@ const errorhandler = (err,res) => {
 
 const getTitle = async (req, res) => {
     try {
-        
         const movieTitle= await movieService.getTitle();
         return res.status(200).json(movieTitle);
        
@@ -23,6 +22,10 @@ const orderByBase = async (req, res) => {
         return res.status(201).json({
             orderList: orderList
         });
+    } catch(err) {
+        errorhandler(err, res);
+    }
+};
 
 const getDetail = async (req, res) => {
     try {
