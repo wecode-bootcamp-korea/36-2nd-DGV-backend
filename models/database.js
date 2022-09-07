@@ -9,7 +9,7 @@ const MySQLDatabase = new DataSource({
   database: process.env.TYPEORM_DATABASE
 })
 
- MySQLDatabase.initialize()
+MySQLDatabase.initialize()
 .then(() => {
   console.log("DataSource has been initialized");
 })
