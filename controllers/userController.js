@@ -17,6 +17,20 @@ const logInWithKakao = async (req, res) => {
     };
 };
 
+const getUserDetail = async(req, res) => {
+    try{
+        const user = req.user;
+
+        const detail = await userService.getUserDetail(user);
+        
+        res.status(200).json(detail);
+
+    }catch(err){
+        errorhandler(err, res);
+    };
+};
+
 module.exports = {
-    logInWithKakao
+    logInWithKakao,
+    getUserDetail
 };

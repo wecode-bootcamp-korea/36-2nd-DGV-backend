@@ -25,6 +25,14 @@ const logInWithKakao = async (accessToken) => {
     return jwtToken;
 };
 
+const getUserDetail = async (user) => {
+    const info = await userDao.getUserById(user.kakao_id);
+
+    return info;
+};
+
+
 module.exports = {
-    logInWithKakao
+    logInWithKakao,
+    getUserDetail
 };
