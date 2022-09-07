@@ -14,6 +14,7 @@ const getListBySubLocationName = async (subLocationName) => {
 
 const getListByMovieIdAndSubLocation = async (movieId, subLocationName) => {
     return await movieDao.getListByMovieIdAndSubLocation(movieId, subLocationName);
+};
 
 const orderByBase = async (orderBase) => {
     return await movieDao.orderByBase(orderBase);
@@ -27,7 +28,7 @@ module.exports = {
     getTitle,
     getListByLocationName,
     getListBySubLocationName,
-    getListByMovieIdAndSubLocation
+    getListByMovieIdAndSubLocation,
     orderByBase,
     getDetail
 };
