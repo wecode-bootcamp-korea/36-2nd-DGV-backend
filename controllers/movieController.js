@@ -23,6 +23,13 @@ const orderByBase = async (req, res) => {
         return res.status(201).json({
             orderList: orderList
         });
+
+const getDetail = async (req, res) => {
+    try {
+        const { movieId } = req.params
+        
+        const movieDetail = await movieService.getDetail(movieId);
+        return res.status(200).json(movieDetail);
        
     } catch(err) {
         errorhandler(err, res);
@@ -31,5 +38,6 @@ const orderByBase = async (req, res) => {
 
 module.exports = {
     getTitle,
-    orderByBase
+    orderByBase,
+    getDetail
 };

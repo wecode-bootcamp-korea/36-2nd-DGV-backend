@@ -20,6 +20,31 @@ const getTitle = async () => {
     }
 };
 
+const getDetail = async (movieId) => {
+    try{
+        return await MySQLDatabase.query(`
+        SELECT
+            m.id,
+            m.title,
+            m.eng_title,
+            DATE_FORMAT(m.opening_date, '%Y-%m-%d') opening_date,
+            m.running_time,
+            m.genre,
+            m.description,
+            m.rating_week,
+            m.thumbnail_image_url,
+            JSON_objectAGG(i.id, i.image_url) as images
+        FROM
+            movies m
+        inner join images i 
+            ON m.id = i.movie_id
+        where m.id = ${movieId};
+        `);
+    } catch (err) {
+        errorHandler();
+    }
+};
+
 const orderByBase = async (orderBase) => {
     try {
         return await MySQLDatabase.query(`
@@ -39,5 +64,6 @@ const orderByBase = async (orderBase) => {
 
 module.exports ={
     getTitle,
-    orderByBase
+    orderByBase,
+    getDetail
 }
