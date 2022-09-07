@@ -20,6 +20,48 @@ const getTitle = async () => {
     }
 };
 
+const getDetail = async (movieId) => {
+    try{
+        return await MySQLDatabase.query(`
+        SELECT
+            m.id,
+            m.title,
+            m.eng_title,
+            DATE_FORMAT(m.opening_date, '%Y-%m-%d') opening_date,
+            m.running_time,
+            m.genre,
+            m.description,
+            m.rating_week,
+            m.thumbnail_image_url,
+            JSON_objectAGG(i.id, i.image_url) as images
+        FROM
+            movies m
+        inner join images i 
+            ON m.id = i.movie_id
+        where m.id = ${movieId};
+        `);
+    } catch (err) {
+        errorHandler();
+    }
+};
+
+const orderByBase = async (orderBase) => {
+    try {
+        return await MySQLDatabase.query(`
+        SELECT
+            m.id,
+            m.title,
+            m.eng_title,
+            m.description,
+            m.thumbnail_image_url
+        FROM movies m
+        ORDER BY ${orderBase} ASC
+        `)
+    } catch (err) {
+        errorHandler();
+    }
+};
+
 const getListByLocationName = async (locationName) => {
     try {
         return await MySQLDatabase.query(`
@@ -78,6 +120,8 @@ const getListByMovieIdAndSubLocation = async (movieId, subLocationName) => {
 
 module.exports ={
     getTitle,
+    orderByBase,
+    getDetail,
     getListByLocationName,
     getListBySubLocationName,
     getListByMovieIdAndSubLocation
