@@ -1,7 +1,10 @@
 const theaterDao = require('../models/theaterDao')
 
-const getListByMovieId = async (movieId) => {
+const getLocation = async () => {
+    return await theaterDao.getLocation();
+};
 
+const getListByMovieId = async (movieId) => {
     const lists = await theaterDao.getListByMovieId(movieId);
     for (const list of lists){
         list.sub = JSON.parse(list.sub)
@@ -10,5 +13,6 @@ const getListByMovieId = async (movieId) => {
 };
 
 module.exports ={
+    getLocation,
     getListByMovieId
 }
