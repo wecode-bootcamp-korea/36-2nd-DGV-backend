@@ -67,7 +67,8 @@ const getListByLocationName = async (locationName) => {
         return await MySQLDatabase.query(`
         SELECT DISTINCT
             m.id,
-            m.title
+            m.title,
+            m.thumbnail_image_url image
         FROM
             movies_theaters mt
             LEFT JOIN movies m ON mt.movie_id = m.id
@@ -86,7 +87,8 @@ const getListBySubLocationName = async (subLocationName) => {
         return await MySQLDatabase.query(`
         SELECT
             m.id,
-            m.title
+            m.title,
+            m.thumbnail_image_url image
         FROM movies_theaters mt
         LEFT JOIN movies m ON mt.movie_id = m.id
         LEFT JOIN theaters t ON mt.theater_id = t.id
@@ -105,11 +107,25 @@ const getListByMovieIdAndSubLocation = async (movieId, subLocationName) => {
             mt.id,
             t.auditorium,
             t.seats,
-            DATE_FORMAT(mt.start_time, '%Y,%m,%d') date,
-            DATE_FORMAT(mt.start_time, '%h:%i') time
-        FROM movies_theaters mt
+            area.date date,
+            area.time time
+        FROM
+            movies_theaters mt 
         LEFT JOIN theaters t ON mt.theater_id = t.id
         LEFT JOIN sub_location sl ON t.sub_location_id=sl.id
+        right join  
+        (SELECT
+            dateList.formedDate date,
+            JSON_ARRAYAGG(dateList.formedTime) time
+            FROM
+                (SELECT
+                    DATE_FORMAT(mt.start_time, '%Y, %c, %e') formedDate,
+                    DATE_FORMAT(mt.start_time, '%h:%i') formedTime
+                FROM
+                    movies_theaters mt 
+                LEFT JOIN theaters t ON mt.theater_id = t.id
+                LEFT JOIN sub_location sl ON t.sub_location_id=sl.id) dateList
+            GROUP BY date) area on area.date = DATE_FORMAT(mt.start_time, '%Y, %c, %e')
         where mt.movie_id = ${movieId}
         and sl.name=${subLocationName} 
         `)

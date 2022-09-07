@@ -36,7 +36,6 @@ const getLocation = async () => {
 };
 
 const getListByMovieId = async (movieId) => {
-    console.log(movieId)
     try {
         return await MySQLDatabase.query(`
         SELECT

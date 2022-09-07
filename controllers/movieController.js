@@ -1,4 +1,5 @@
 const movieService = require('../services/movieService');
+const theaterService = require('../services/theaterService');
 
 const errorhandler = (err,res) => {
     return res.status(err.statusCode || 500).json({ message : err.message });
@@ -22,7 +23,7 @@ const getListByLocationName = async (req, res) => {
         const listByLocationName = await movieService.getListByLocationName(locationName);
         
         return res.status(200).json({
-            movieList:listByLocationName
+            movies:listByLocationName
         });
        
     } catch(err) {
@@ -34,9 +35,12 @@ const getListBySubLocationName = async (req, res) => {
     try {
         const { subLocationName } = req.query
         
+        const location = await theaterService.getLocation();
         const listBySubLocationName = await movieService.getListBySubLocationName(subLocationName);
         
-        return res.status(200).json({movieList: listBySubLocationName});
+        return res.status(200).json({
+            theaters :location
+            ,movies: listBySubLocationName});
         
     } catch(err) {
         errorhandler(err, res);
@@ -75,9 +79,14 @@ const getDetail = async (req, res) => {
 const getListByMovieIdAndSubLocation = async (req, res) => {
     try {
         const { movieId, subLocationName } = req.query
-        
+
+        const movieTitle= await movieService.getTitle();
+        const location = await theaterService.getLocation();
         const listByTwoOptions = await movieService.getListByMovieIdAndSubLocation(movieId, subLocationName);
-        return res.status(200).json({movieList:listByTwoOptions});
+        return res.status(200).json({
+            movies: movieTitle,
+            theaters: location,
+            timeList: listByTwoOptions});
        
     } catch(err) {
         errorhandler(err, res);

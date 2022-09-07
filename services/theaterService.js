@@ -1,7 +1,11 @@
 const theaterDao = require('../models/theaterDao')
 
 const getLocation = async () => {
-    return await theaterDao.getLocation();
+    const lists = await theaterDao.getLocation();
+    for (const list of lists){
+        list.sub = JSON.parse(list.sub)
+    }
+    return lists
 };
 
 const getListByMovieId = async (movieId) => {

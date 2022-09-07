@@ -13,7 +13,11 @@ const getListBySubLocationName = async (subLocationName) => {
 };
 
 const getListByMovieIdAndSubLocation = async (movieId, subLocationName) => {
-    return await movieDao.getListByMovieIdAndSubLocation(movieId, subLocationName);
+    const lists  = await movieDao.getListByMovieIdAndSubLocation(movieId, subLocationName);
+    for (const list of lists){
+        list.time = JSON.parse(list.time)
+    }
+    return lists
 };
 
 const orderByBase = async (orderBase) => {
