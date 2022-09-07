@@ -22,7 +22,7 @@ const getTitle = async () => {
 
 const getDetail = async (movieId) => {
     try{
-        return await MySQLDatabase.query(` 
+        return await MySQLDatabase.query(`
         SELECT
             m.id,
             m.title,
@@ -45,7 +45,25 @@ const getDetail = async (movieId) => {
     }
 };
 
+const orderByBase = async (orderBase) => {
+    try {
+        return await MySQLDatabase.query(`
+        SELECT
+            m.id,
+            m.title,
+            m.eng_title,
+            m.description,
+            m.thumbnail_image_url
+        FROM movies m
+        ORDER BY ${orderBase} ASC
+        `)
+    } catch (err) {
+        errorHandler();
+    }
+};
+
 module.exports ={
     getTitle,
+    orderByBase,
     getDetail
 }

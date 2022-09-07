@@ -15,6 +15,15 @@ const getTitle = async (req, res) => {
     }
 };
 
+const orderByBase = async (req, res) => {
+    try {
+        const { orderBase } = req.query
+        
+        const orderList = await movieService.orderByBase(orderBase);
+        return res.status(201).json({
+            orderList: orderList
+        });
+
 const getDetail = async (req, res) => {
     try {
         const { movieId } = req.params
@@ -29,5 +38,6 @@ const getDetail = async (req, res) => {
 
 module.exports = {
     getTitle,
+    orderByBase,
     getDetail
 };
