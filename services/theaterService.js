@@ -4,6 +4,11 @@ const getLocation = async () => {
     return await theaterDao.getLocation();
 };
 
+const getListByMovieId = async (movieId) => {
+    return await theaterDao.getListByMovieId(movieId); 
+};
+
 module.exports ={
-    getLocation
+    getLocation,
+    getListByMovieId
 }

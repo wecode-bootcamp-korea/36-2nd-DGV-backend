@@ -18,6 +18,23 @@ const getMovies = async (req, res) => {
     }
 };
 
+const getMovieById = async (req, res) => {
+    try {
+        
+        const {movieId} = req.query
+        
+        const movies= await movieService.getTitle();
+        const location = await theaterService.getListByMovieId(movieId);
+        return res.status(200).json({
+            movies: movies,
+            theaters: location
+        });
+    } catch(err) {
+        errorhandler(err, res);
+    }
+};
+
 module.exports = {
-    getMovies
+    getMovies,
+    getMovieById
 };
