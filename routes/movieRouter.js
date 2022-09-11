@@ -8,7 +8,7 @@ router.get('/list', movieController.orderByBase);
 router.get('/locations' , movieController.getListByLocationName);
 router.get('/sublocation', movieController.getListBySubLocationName);
 router.get('/idandsublocation', movieController.getListByMovieIdAndSubLocation);
-router.get(':movieId', movieController.getDetail);
+router.get('/:movieId', movieController.getDetail);
 
 
 module.exports = {
