@@ -9,7 +9,18 @@ const startServer = async () => {
   const server = http.createServer(app);
   const PORT = process.env.PORT;
 
-	await MySQLDatabase.initialize();
+  app.get("/ping", (req, res) => {
+    res.json({ message: "pong" });
+  });
+
+	await MySQLDatabase.initialize()
+  .then(() => {
+    console.log("Data Source has been initialized");
+  })
+  .catch((err) => {
+    console.error("Error during Data Source initialization", err);
+    database.destroy()
+  })
 
   server.listen(PORT, () => {
     console.log(`Listening on Port ${PORT}`);
