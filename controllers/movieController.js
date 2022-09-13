@@ -62,6 +62,9 @@ const getDetail = async (req, res) => {
     try {
         const { movieId } = req.params
         
+        if(!movieId){
+            return res.status(400).json({message: "KEY_ERROR"});
+        }
         const movieDetail = await movieService.getDetail(movieId);
         
         return res.status(200).json(movieDetail);
