@@ -1,16 +1,13 @@
 const theaterService = require('../services/theaterService');
-const movieService = require('../services/movieService');
 
 const errorhandler = (err,res) => {
     return res.status(err.statusCode || 500).json({ message : err.message });
 };
 
-const getMovies = async (req, res) => {
+const getLocation = async (req, res) => {
     try {
-        const movies= await movieService.getTitle();
         const location = await theaterService.getLocation();
         return res.status(200).json({
-            movies: movies,
             theaters: location
         });
     } catch(err) {
@@ -18,15 +15,19 @@ const getMovies = async (req, res) => {
     }
 };
 
-const getMovieById = async (req, res) => {
+const getByMovieId = async (req, res) => {
     try {
         
         const {movieId} = req.query
+
+        if(!movieId){
+            const err = new Error ('query_notfound')
+            err.statusCode=400;
+            throw err;
+        }
         
-        const movies= await movieService.getTitle();
         const location = await theaterService.getListByMovieId(movieId);
         return res.status(200).json({
-            movies: movies,
             theaters: location
         });
     } catch(err) {
@@ -35,6 +36,6 @@ const getMovieById = async (req, res) => {
 };
 
 module.exports = {
-    getMovies,
-    getMovieById
+    getLocation,
+    getByMovieId
 };
